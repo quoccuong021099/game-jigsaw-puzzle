@@ -3,7 +3,7 @@ import GameResult from "./GameResult";
 const fakeData1 = [
   {
     id: 0,
-    name: "card16",
+    name: "card0",
     src: "https://blogphanmem.vn/wp-content/uploads/2021/12/Cute-pho-mai-que-8.jpeg",
     value: 1,
   },
@@ -98,6 +98,62 @@ const fakeData1 = [
     value: 8,
   },
 ].sort(() => Math.random() - 0.5);
+
+const data55 = [
+  {
+    id: 16,
+    name: "card16",
+    src: "https://img.freepik.com/free-vector/cute-koala-with-cub-cartoon-icon-illustration_138676-2839.jpg",
+    value: 9,
+  },
+  {
+    id: 17,
+    name: "card17",
+    src: "https://img.freepik.com/free-vector/cute-koala-with-cub-cartoon-icon-illustration_138676-2839.jpg",
+    value: 9,
+  },
+  {
+    id: 18,
+    name: "card18",
+    src: "https://yohohindi.com/wp-content/uploads/2021/04/Yohohindi.com__21-300x300.jpg",
+    value: 10,
+  },
+  {
+    id: 19,
+    name: "card19",
+    src: "https://yohohindi.com/wp-content/uploads/2021/04/Yohohindi.com__21-300x300.jpg",
+    value: 10,
+  },
+];
+
+const data66 = [
+  ...data55,
+  {
+    id: 20,
+    name: "card20",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsOo79pqwSFtoXycrY6ByDPnX61yv8K0hnw&usqp=CAU",
+    value: 11,
+  },
+  {
+    id: 21,
+    name: "card21",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsOo79pqwSFtoXycrY6ByDPnX61yv8K0hnw&usqp=CAU",
+    value: 11,
+  },
+  {
+    id: 22,
+    name: "card22",
+    src: "https://thumbs.dreamstime.com/b/illustration-cute-panda-animal-cartoon-character-wearing-mask-against-virus-cute-panda-animal-cartoon-characters-wearing-213323515.jpg",
+    value: 12,
+  },
+  {
+    id: 23,
+    name: "card23",
+    src: "https://thumbs.dreamstime.com/b/illustration-cute-panda-animal-cartoon-character-wearing-mask-against-virus-cute-panda-animal-cartoon-characters-wearing-213323515.jpg",
+    value: 12,
+  },
+];
+
 export default function GameContainer() {
   const [open, setOpen] = useState(false);
   const [clickItem, setClickItem] = useState([]);
@@ -163,10 +219,38 @@ export default function GameContainer() {
     setFlips([]);
     setFakeData(fakeData.sort(() => Math.random() - 0.5));
   };
+  const options = [
+    { value: "4", text: "Level 1" },
+    { value: "5", text: "Level 2" },
+    { value: "6", text: "Level 3" },
+  ];
+  const [selected, setSelected] = useState(options[0].value);
+
+  const handleChange = (e) => {
+    setOpen(false);
+    setClickItem([]);
+    setDone([]);
+    setLoading(false);
+    setFlag(false);
+    setTime(0);
+    setFlips([]);
+    setSelected(e.target.value);
+    if (e.target.value === "4") {
+      setFakeData(fakeData1);
+    }
+    if (e.target.value === "5") {
+      const data = [...fakeData1, ...data55];
+      setFakeData(data.sort(() => Math.random() - 0.5));
+    }
+    if (e.target.value === "6") {
+      const data = [...fakeData1, ...data66];
+      setFakeData(data.sort(() => Math.random() - 0.5));
+    }
+  };
 
   return (
     <div className="bg-slate-600 p-2 rounded-lg">
-      <div className="grid grid-cols-4 gap-4">
+      <div className={`grid grid-cols-${selected} gap-4`}>
         {fakeData.map((item) => (
           <div
             className="w-[90px] h-[90px] relative bg-orange-400 rounded-lg overflow-hidden transition: 0.4s ease-in-out select-none"
@@ -205,6 +289,9 @@ export default function GameContainer() {
         time={time}
         handleRefresh={handleRefresh}
         flip={flips.length / 2}
+        selected={selected}
+        handleChange={handleChange}
+        options={options}
       />
     </div>
   );
