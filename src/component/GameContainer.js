@@ -224,7 +224,7 @@ export default function GameContainer() {
     { value: "5", text: "Level 2" },
     { value: "6", text: "Level 3" },
   ];
-  const [selected, setSelected] = useState(options[0].value);
+  const [selected, setSelected] = useState("4");
 
   const handleChange = (e) => {
     setOpen(false);
