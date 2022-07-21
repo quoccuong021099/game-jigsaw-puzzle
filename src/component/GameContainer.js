@@ -250,7 +250,10 @@ export default function GameContainer() {
 
   return (
     <div className="bg-slate-600 p-2 rounded-lg">
-      <div className={`grid grid-cols-${selected} gap-4`}>
+      <div
+        className={`grid gap-4`}
+        style={{ gridTemplateColumns: `repeat(${selected}, minmax(0, 1fr))` }}
+      >
         {fakeData.map((item) => (
           <div
             className="w-[90px] h-[90px] relative bg-orange-400 rounded-lg overflow-hidden transition: 0.4s ease-in-out select-none"
